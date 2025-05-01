@@ -1,0 +1,6 @@
+# @format
+---
+# tasks file for laravel_deploy
+- import_tasks: mysql.yml
+- import_tasks: php-fpm.yml
+- import_tasks: phpmyadmin.yml

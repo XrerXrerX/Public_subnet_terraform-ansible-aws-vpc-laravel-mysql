@@ -1,0 +1,12 @@
+# @format
+---
+# handlers file for phpmyadmin
+- name: Reload nginx
+  service:
+    name: nginx
+    state: reloaded
+
+- name: Restart mysql
+  service:
+    name: mysql
+    state: restarted

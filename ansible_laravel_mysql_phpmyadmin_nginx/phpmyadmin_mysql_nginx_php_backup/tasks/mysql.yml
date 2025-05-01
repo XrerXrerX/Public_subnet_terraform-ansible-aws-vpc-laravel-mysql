@@ -1,0 +1,32 @@
+# @format
+---
+- name: Ensure python3-pymysql is installed (for Ansible MySQL modules)
+  apt:
+    name: python3-pymysql
+    state: present
+    update_cache: yes
+
+- name: Install MySQL server
+  apt:
+    name: mysql-server
+    state: present
+    update_cache: yes
+
+- name: Ensure MySQL running
+  service:
+    name: mysql
+    state: started
+    enabled: yes
+
+- name: Create MySQL user xynamons@localhost
+  community.mysql.mysql_user:
+    name: "{{ mysql_username }}"
+    password: "{{ mysql_password }}"
+    host: "{{ mysql_user_host }}"
+    priv: "*.*:ALL,GRANT"
+    state: present
+    login_user: root
+    #login_password: "{{ mysql_root_password }}"
+    # atau jika root MySQL tanpa password, bisa hilangkan login_password
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  #no_log: true

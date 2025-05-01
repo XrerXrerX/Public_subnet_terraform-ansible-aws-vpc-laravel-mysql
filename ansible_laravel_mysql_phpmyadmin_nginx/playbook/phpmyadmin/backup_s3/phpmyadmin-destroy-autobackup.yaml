@@ -1,0 +1,9 @@
+# @format
+
+- hosts: phpmyadmin
+  become: yes
+  tasks:
+    - name: bersihkan auto back up
+      include_role:
+        name: phpmyadmin
+        tasks_from: aws_destroy_backup.yml

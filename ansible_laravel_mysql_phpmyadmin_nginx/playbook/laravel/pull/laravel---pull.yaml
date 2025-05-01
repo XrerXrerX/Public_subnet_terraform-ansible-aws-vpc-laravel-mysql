@@ -1,0 +1,9 @@
+# @format
+
+- hosts: laravel_deploy_dev
+  become: yes
+  tasks:
+    - name: jalankan pull dan php artisan migrate
+      include_role:
+        name: laravel_after_phpmyadmin_mysql
+        tasks_from: pull_repo.yml

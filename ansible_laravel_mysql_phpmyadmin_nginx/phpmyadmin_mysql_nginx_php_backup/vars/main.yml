@@ -1,0 +1,28 @@
+# @format
+---
+# vars file for phpmyadmin (mock version)
+
+phpmyadmin_allowed_ips:
+  - yourip
+  - yourip
+
+phpmyadmin_server_name: "{{ ansible_host }}" # Automatically set to host public IP
+php_fpm_version: "8.3"
+
+mysql_username: demo_user
+mysql_password: demo_pass_123
+mysql_user_host: localhost
+host_ip_bind_address: 10.0.1.10 # Private IP used for internal MySQL access
+
+#forbucket s3 amazon
+aws_access_key_id: "MOCKACCESSKEYID12345"
+aws_secret_access_key: "MOCKSECRETKEY1234567890mockedValueDoNotUseInProduction"
+aws_region: "ap-southeast-2"
+
+db_name:
+  - mockdb1
+  - mockdb2
+
+db_user: "root"
+
+s3_bucket: "s3://mock-bucket.example"

@@ -1,0 +1,9 @@
+# @format
+
+- hosts: phpmyadmin
+  become: yes
+  tasks:
+    - name: Jalankan task destroy mysql nginx php phpmyadmin
+      include_role:
+        name: phpmyadmin_mysql_nginx_php_backup
+        tasks_from: destroy.yml

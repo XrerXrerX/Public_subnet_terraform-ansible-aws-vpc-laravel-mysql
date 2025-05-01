@@ -1,0 +1,9 @@
+# @format
+
+- hosts: laravel_deploy_dev
+  become: yes
+  tasks:
+    - name: hapus laravel project
+      include_role:
+        name: phpmyadmin_mysql_nginx_php_backup
+        tasks_from: destroy.yml

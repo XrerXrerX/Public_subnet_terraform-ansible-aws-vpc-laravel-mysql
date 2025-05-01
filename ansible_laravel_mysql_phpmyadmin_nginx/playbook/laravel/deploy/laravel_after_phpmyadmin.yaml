@@ -1,0 +1,6 @@
+# @format
+
+- hosts: laravel_deploy_dev
+  become: yes
+  roles:
+    - laravel_after_phpmyadmin_mysql

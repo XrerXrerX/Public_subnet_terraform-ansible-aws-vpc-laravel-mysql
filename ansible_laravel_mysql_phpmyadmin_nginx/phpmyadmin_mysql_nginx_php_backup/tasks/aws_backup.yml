@@ -1,0 +1,83 @@
+# @format
+---
+- name: Install unzip
+  apt:
+    name: unzip
+    state: present
+    update_cache: yes
+
+- name: Download AWS CLI installer
+  get_url:
+    url: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+    dest: /root/awscliv2.zip
+
+- name: Unzip AWS CLI installer
+  unarchive:
+    src: /root/awscliv2.zip
+    dest: /root/
+    remote_src: yes
+
+- name: Install AWS CLI
+  command: ./aws/install
+  args:
+    chdir: /root
+    creates: /usr/local/bin/aws
+
+- name: Ensure .aws directory exists
+  file:
+    path: /root/.aws
+    state: directory
+    mode: "0700"
+    owner: root
+    group: root
+
+- name: Create AWS credentials file
+  copy:
+    dest: /root/.aws/credentials
+    content: |
+      [default]
+      aws_access_key_id={{ aws_access_key_id }}
+      aws_secret_access_key={{ aws_secret_access_key }}
+    owner: root
+    group: root
+    mode: "0600"
+
+- name: Create AWS config file
+  copy:
+    dest: /root/.aws/config
+    content: |
+      [default]
+      region = {{ aws_region }}
+    owner: root
+    group: root
+    mode: "0600"
+
+- name: Ensure backup directory exists
+  file:
+    path: /var/backups/backup_sql/
+    state: directory
+    mode: "0755"
+    owner: root
+    group: root
+
+- name: Deploy SQL backup script
+  template:
+    src: backup_sql_to_s3.j2
+    dest: /root/backup_sql_to_s3.sh
+    mode: "0755"
+    owner: root
+    group: root
+
+- name: Add cron job for SQL backup to S3 every 5 minutes
+  cron:
+    name: "SQL backup to S3 every 5 minutes"
+    user: root
+    minute: "*/5"
+    job: "/root/backup_sql_to_s3.sh"
+# - name: Add cron job for SQL backup to S3
+#   cron:
+#     name: "SQL backup to S3 every day at 01:00"
+#     user: root
+#     minute: "0"
+#     hour: "1"
+#     job: "/root/backup_sql_to_s3.sh"

@@ -1,0 +1,114 @@
+# @format
+---
+- name: Stop nginx
+  service:
+    name: nginx
+    state: stopped
+  ignore_errors: true
+
+- name: Stop mysql
+  service:
+    name: mysql
+    state: stopped
+  ignore_errors: true
+
+- name: Remove phpmyadmin package
+  apt:
+    name: phpmyadmin
+    state: absent
+    purge: yes
+    autoremove: yes
+  ignore_errors: true
+
+- name: Remove nginx
+  apt:
+    name: nginx
+    state: absent
+    purge: yes
+    autoremove: yes
+  ignore_errors: true
+
+- name: Remove mysql-server
+  apt:
+    name: mysql-server
+    state: absent
+    purge: yes
+    autoremove: yes
+  ignore_errors: true
+
+- name: Remove installed PHP {{ php_fpm_version }} dan extensions (clean up)
+  apt:
+    name:
+      - php{{ php_fpm_version }}
+      - php{{ php_fpm_version }}-fpm
+      - php{{ php_fpm_version }}-mysql
+      - php{{ php_fpm_version }}-mbstring
+      - php{{ php_fpm_version }}-zip
+      - php{{ php_fpm_version }}-gd
+      - php{{ php_fpm_version }}-curl
+      - php{{ php_fpm_version }}-xml
+      - php{{ php_fpm_version }}-ctype
+      - php{{ php_fpm_version }}-bcmath
+      - php{{ php_fpm_version }}-intl
+      - php{{ php_fpm_version }}-opcache
+    state: absent
+    purge: yes
+    autoremove: yes
+  ignore_errors: yes
+
+- name: Remove PHP CLI binaries (manual clean, just in case)
+  file:
+    path: "/usr/bin/php"
+    state: absent
+  ignore_errors: yes
+
+- name: Remove Ondrej PHP PPA (optional, advanced)
+  apt_repository:
+    repo: ppa:ondrej/php
+    state: absent
+  ignore_errors: yes
+
+- name: Remove phpMyAdmin nginx config (if exists)
+  file:
+    path: /etc/nginx/conf.d/phpmyadmin.conf
+    state: absent
+
+- name: Remove phpMyAdmin default directory (if exists)
+  file:
+    path: /usr/share/phpmyadmin
+    state: absent
+
+# - name: Remove Nginx conf.d directory (optional, only if empty and not used by other configs)
+#   file:
+#     path: /etc/nginx/conf.d
+#     state: absent
+#   ignore_errors: true
+
+# - name: Remove MySQL database directory (optional, WARNING: ini hapus semua data database MySQL!)
+#   file:
+#     path: /var/lib/mysql
+#     state: absent
+#   ignore_errors: true
+
+- name: Remove MySQL configuration files (optional)
+  file:
+    path: /etc/mysql
+    state: absent
+  ignore_errors: true
+
+- name: Remove PHP configuration directory (optional)
+  file:
+    path: /etc/php
+    state: absent
+  ignore_errors: true
+
+- name: Remove nginx configuration directory (optional)
+  file:
+    path: /etc/nginx
+    state: absent
+  ignore_errors: true
+
+- name: Clean apt cache
+  apt:
+    autoclean: yes
+    autoremove: yes

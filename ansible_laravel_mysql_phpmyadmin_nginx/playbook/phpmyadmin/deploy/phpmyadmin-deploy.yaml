@@ -1,0 +1,6 @@
+# @format
+---
+- hosts: phpmyadmin
+  become: true
+  roles:
+    - phpmyadmin_mysql_nginx_php_backup

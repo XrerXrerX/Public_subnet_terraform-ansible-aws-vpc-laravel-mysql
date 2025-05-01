@@ -1,0 +1,35 @@
+# @format
+---
+- name: Install nginx first!
+  apt:
+    name:
+      - nginx
+    state: present
+    update_cache: yes
+
+- name: Ensure nginx is started
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+
+# tasks file for phpmyadmin
+- name: Install phpmyadmin
+  apt:
+    name: phpmyadmin
+    state: present
+    update_cache: yes
+
+- name: Ensure Nginx conf.d exists
+  file:
+    path: /etc/nginx/conf.d
+    state: directory
+
+- name: Deploy phpmyadmin nginx config
+  template:
+    src: phpmyadmin.conf.j2
+    dest: /etc/nginx/conf.d/phpmyadmin.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: Reload nginx

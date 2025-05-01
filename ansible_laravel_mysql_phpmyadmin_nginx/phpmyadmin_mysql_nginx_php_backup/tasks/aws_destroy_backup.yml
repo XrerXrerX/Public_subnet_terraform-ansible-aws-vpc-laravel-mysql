@@ -1,0 +1,38 @@
+# @format
+---
+- name: Remove cron job for SQL backup to S3 every 5 minutes
+  cron:
+    name: "SQL backup to S3 every 5 minutes"
+    user: root
+    state: absent
+
+- name: Remove SQL backup script
+  file:
+    path: /root/backup_sql_to_s3.sh
+    state: absent
+
+- name: Remove backup SQL directory and its contents
+  file:
+    path: /var/backups/backup_sql/
+    state: absent
+
+# (Optional) Hapus juga credential AWS jika memang tidak dipakai lagi:
+- name: Remove AWS credentials
+  file:
+    path: /root/.aws/credentials
+    state: absent
+
+- name: Remove AWS config
+  file:
+    path: /root/.aws/config
+    state: absent
+
+- name: Remove AWS CLI installer directory
+  file:
+    path: /root/aws
+    state: absent
+
+- name: Remove AWS CLI installer zip
+  file:
+    path: /root/awscliv2.zip
+    state: absent

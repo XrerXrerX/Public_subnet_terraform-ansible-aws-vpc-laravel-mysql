@@ -1,0 +1,22 @@
+# @format
+---
+# vars file for laravel_deploy
+laravel_repo_url: "https://yourrepo.git"
+laravel_repo_branch: "main"
+laravel_app_path: "/var/www/laravel"
+laravel_db_host: "10..0.0.1"
+laravel_db_name: "laraveldb"
+laravel_db_user: "test1234"
+laravel_db_password: "test1234"
+laravel_server_name: "yourdomain" # atau IP public
+laravel_ssl_cert: "/etc/ssl/laravel/laravel.pem"
+laravel_ssl_key: "/etc/ssl/laravel/laravel.key"
+laravel_db_port: "3306"
+laravel_db_connection: "mysql"
+env: prod
+
+app_env_map:
+  prod: production
+  dev: local
+
+php_fpm_version: "8.3"

@@ -1,0 +1,9 @@
+# @format
+
+- hosts: phpmyadmin
+  become: yes
+  tasks:
+    - name: jalankan automigrate to s3
+      include_role:
+        name: phpmyadmin
+        tasks_from: aws_backup.yml
