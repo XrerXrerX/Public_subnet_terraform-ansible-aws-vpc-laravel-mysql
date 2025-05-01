@@ -7,8 +7,6 @@
 [![AWS](https://img.shields.io/badge/Cloud-AWS-232F3E?logo=amazonaws)](https://aws.amazon.com/)
 [![Ubuntu](https://img.shields.io/badge/OS-Ubuntu-E95420?logo=ubuntu)](https://ubuntu.com/)
 
-# 🚀 Laravel + MySQL Infrastructure on AWS (Terraform + Ansible)
-
 This project provisions and configures a **secure, production-ready Laravel + MySQL infrastructure on AWS**, using **Terraform** for provisioning and **Ansible** for configuration management. It also includes **phpMyAdmin**, served via **Nginx**, all deployed in **public subnets** across EC2 instances.
 
 ---
